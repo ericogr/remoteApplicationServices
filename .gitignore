@@ -1,0 +1,7 @@
+/target/
+/nb-configuration.xml
+/src/main/webapp/resources/css
+/src/main/webapp/resources/components
+.classpath
+.project
+.settings

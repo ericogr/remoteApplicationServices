@@ -1,0 +1,22 @@
+Parâmetros para testar
+
+usuario/senha: erico/erico1234
+scopos: read, read_write
+
+*** Autenticacao oauth - resource owner password ***
+-Foi definido que o username e password oauth são os mesmos utilizados na autenticação basic
+curl -v -X GET \
+   'http://erico:erico1234@localhost:8080/remote-application-services/api/oauth/token?username=erico&password=erico1234&grant_type=password&scope=read'
+
+-Consumo do serviço utilizando o token gerado
+curl -v -X GET \
+   -H "Authorization: bearer 5762d0c1-b903-4abd-86cc-272b70a50aef" \
+   'http://localhost:8080/remote-application-services/api/matematica/somar?a=12&b=15'
+
+-Refresh token
+curl -v -X GET \
+   'http://erico:erico1234@localhost:8080/remote-application-services/api/oauth/token?grant_type=refresh_token&scope=read&refresh_token=6635ac91-f378-4c69-be59-fd2b2fdfc01c'
+
+*** implicit ***
+-Precisa de login (basic) e depois de aprovação do usuário
+http://localhost:8080/remote-application-services/api/oauth/authorize?&scope=read&response_type=token&client_id=erico

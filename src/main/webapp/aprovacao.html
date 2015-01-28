@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Autoriza o acesso da aplicação externa?</div>
+        <form method='POST' id='confirmationForm'>
+            <p>
+                <input name='user_oauth_approval' type='hidden' value='true' />
+                <label><input name="authorize" value="Authorize" type="submit" /></label>
+            </p>
+        </form>
+        <form method='POST' id='denialForm' class='cssform'>
+            <p>
+                <input name='user_oauth_approval' type='hidden' value='false' />
+                <label><input name="deny" value="Deny" type="submit" /></label>
+            </p>
+        </form>
+    </body>
+</html>
