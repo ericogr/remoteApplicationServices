@@ -7,13 +7,19 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 import java.net.UnknownHostException;
 import java.security.Principal;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Queue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureTask;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +30,9 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RestController
 @RequestMapping(value = "matematica")
 public class TesteController {
-    private Logger logger = LoggerFactory.getLogger(getClass());
-    private final Timer timer = new Timer();
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Queue<DeferredResult<Integer>> requests = new ConcurrentLinkedQueue<>();
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     
     @RequestMapping(value = "adicionar", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -44,7 +51,7 @@ public class TesteController {
             coll.insert(doc);
         }
         catch (UnknownHostException ex) {
-            ex.printStackTrace();
+            logger.error("Erro ao adicionar usuario no mongo db", ex);
         }
     }
     
@@ -64,7 +71,7 @@ public class TesteController {
             
         }
         catch (UnknownHostException ex) {
-            ex.printStackTrace();
+            logger.error("Erro ao adicionar usuario no mongo db", ex);
         }
     }
 
@@ -75,51 +82,10 @@ public class TesteController {
         return a + b;
     }
     
-    @RequestMapping(value = "/somar-blocking", method = RequestMethod.GET)
-    public Integer somarBlockingProcessing(@RequestParam int a, @RequestParam int b) {
-        try {
-            //long x = (long)(Math.random() * 5000);
-            Thread.sleep(5000);
-        } 
-        catch (InterruptedException e) {
-        }
+    @RequestMapping(value = "somar-non-blocking", method = RequestMethod.GET)
+    public ListenableFuture<Integer> somarNonBlockingProcessing(@RequestParam int a, @RequestParam int b) {
+        final ListenableFuture<Integer> responseFuture = new ListenableFutureTask<>(() -> a + b);
         
-        return a + b;
-    }
-
-    @RequestMapping(value = "/somar-non-blocking", method = RequestMethod.GET)
-    public DeferredResult<Integer> somarNonBlockingProcessing(@RequestParam int a, @RequestParam int b) {
-
-        DeferredResult<Integer> deferredResult = new DeferredResult<>();
-        ProcessingTask task = new ProcessingTask(a, b, deferredResult);
-
-        // Schedule the task for asynch completion in the future
-        //long x = (long)(Math.random() * 5000);
-        timer.schedule(task, 5000);
-
-        // Return to let go of the precious thread we are holding on to...
-        return deferredResult;
-    }
-
-    class ProcessingTask extends TimerTask {
-        private final Logger LOG = LoggerFactory.getLogger(ProcessingTask.class);
-        private final int a, b;
-        private final DeferredResult<Integer> deferredResult;
-
-        public ProcessingTask(int a, int b, DeferredResult<Integer> deferredResult) {
-            this.a = a;
-            this.b = b;
-            this.deferredResult = deferredResult;
-        }
-
-        @Override
-        public void run() {
-            if (deferredResult.isSetOrExpired()) {
-                LOG.warn("Processing of non-blocking request already expired");
-            } else {
-                boolean deferredStatus = deferredResult.setResult(new Integer(this.a + this.b));
-                LOG.debug("Processing of non-blocking done, deferredStatus = {}", deferredStatus);
-            }
-        }
+        return responseFuture;
     }
 }

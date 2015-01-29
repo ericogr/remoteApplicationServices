@@ -9,8 +9,9 @@ curl -v -X GET \
    'http://erico:erico1234@localhost:8080/remote-application-services/api/oauth/token?username=erico&password=erico1234&grant_type=password&scope=read'
 
 -Consumo do serviço utilizando o token gerado
+http://localhost:8080/remote-application-services/api/matematica/somar?a=12&b=15&access_token=b057b9bf-4870-4441-9c69-0ce281f4c812
 curl -v -X GET \
-   -H "Authorization: bearer 5762d0c1-b903-4abd-86cc-272b70a50aef" \
+   -H "Authorization: bearer dce1f134-878a-4cf6-ad5a-6b0e69ef1778" \
    'http://localhost:8080/remote-application-services/api/matematica/somar?a=12&b=15'
 
 -Refresh token
