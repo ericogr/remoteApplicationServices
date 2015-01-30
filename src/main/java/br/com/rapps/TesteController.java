@@ -8,18 +8,13 @@ import com.mongodb.WriteConcern;
 import java.net.UnknownHostException;
 import java.security.Principal;
 import java.util.Queue;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureTask;
+import org.springframework.util.concurrent.ListenableFutureAdapter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +27,6 @@ import org.springframework.web.context.request.async.DeferredResult;
 public class TesteController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final Queue<DeferredResult<Integer>> requests = new ConcurrentLinkedQueue<>();
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     
     @RequestMapping(value = "adicionar", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -83,9 +77,22 @@ public class TesteController {
     }
     
     @RequestMapping(value = "somar-non-blocking", method = RequestMethod.GET)
-    public ListenableFuture<Integer> somarNonBlockingProcessing(@RequestParam int a, @RequestParam int b) {
-        final ListenableFuture<Integer> responseFuture = new ListenableFutureTask<>(() -> a + b);
+    public DeferredResult<Integer> somarNonBlockingProcessing(@RequestParam int a, @RequestParam int b) {
+        //TODO: tentar implementar: http://blog.krecan.net/2014/06/10/what-are-listenablefutures-good-for
         
-        return responseFuture;
+        DeferredResult<Integer> deferredResult = new DeferredResult<>();
+        
+        requests.add(deferredResult);
+        
+        deferredResult.onCompletion(new Runnable() {
+            @Override
+            public void run() {
+                requests.remove(deferredResult);
+            }
+        });
+        
+        deferredResult.setResult(a + b);
+                
+        return deferredResult;
     }
 }
