@@ -1,16 +1,9 @@
 package br.com.rapps;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.WriteConcern;
 import java.net.UnknownHostException;
 import java.security.Principal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,47 +20,6 @@ public class TesteController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final ExecutorService executorService = Executors.newWorkStealingPool();
     
-    @RequestMapping(value = "adicionar", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void adicionar() {
-        try {
-            MongoClient mongoClient = new MongoClient();
-            DB db = mongoClient.getDB( "test" );
-            DBCollection coll = db.getCollection("teste");
-            
-            mongoClient.setWriteConcern(WriteConcern.JOURNALED);
-            
-            BasicDBObject doc = new BasicDBObject("name", "MongoDB")
-                    .append("type", "database")
-                    .append("count", 1)
-                    .append("info", new BasicDBObject("x", 203).append("y", 102));
-            coll.insert(doc);
-        }
-        catch (UnknownHostException ex) {
-            logger.error("Erro ao adicionar usuario no mongo db", ex);
-        }
-    }
-    
-    @RequestMapping(value = "adicionar2", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void adicionar2() {
-        try {
-            MongoClient mongoClient = new MongoClient();
-            Datastore datastore = new Morphia().createDatastore(mongoClient, "test");
-            
-            Pessoa pessoa = new Pessoa();
-            pessoa.setIdade(34);
-            pessoa.setNome("erico");
-            pessoa.setSobrenome("gr");
-            
-            datastore.save(pessoa);
-            
-        }
-        catch (UnknownHostException ex) {
-            logger.error("Erro ao adicionar usuario no mongo db", ex);
-        }
-    }
-
     @RequestMapping(value = "somar", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public int somar(@RequestParam int a, @RequestParam int b, Principal principal) {

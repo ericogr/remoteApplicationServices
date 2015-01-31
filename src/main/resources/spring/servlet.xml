@@ -13,4 +13,7 @@
     <mvc:default-servlet-handler/>
     <mvc:view-controller path="/" view-name="index"/>
     
+    <!-- recursos mapeados -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    
 </beans>

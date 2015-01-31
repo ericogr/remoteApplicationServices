@@ -1,0 +1,15 @@
+Testado no Tomcat 8.0.9
+
+Para evitar erros ao restaurar a sessão do tomcat após finalização, desative a persistencia:
+
+SEVERE: Exception loading sessions from persistent storage
+
+Edite o arquivo CATALINA_HOME/conf/context.xml
+
+<!-- Uncomment this to disable session persistence across Tomcat restarts -->
+<!--
+<Manager pathname="" />
+-->
+
+Também apague todo arquivo sessions.ser do diretório:
+CATALINA_HOME/work/Catalina/localhost/rastreioeletronico
