@@ -7,14 +7,13 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 import java.net.UnknownHostException;
 import java.security.Principal;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.concurrent.ListenableFutureAdapter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +25,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RequestMapping(value = "matematica")
 public class TesteController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final Queue<DeferredResult<Integer>> requests = new ConcurrentLinkedQueue<>();
+    private final ExecutorService executorService = Executors.newWorkStealingPool();
     
     @RequestMapping(value = "adicionar", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -78,20 +77,11 @@ public class TesteController {
     
     @RequestMapping(value = "somar-non-blocking", method = RequestMethod.GET)
     public DeferredResult<Integer> somarNonBlockingProcessing(@RequestParam int a, @RequestParam int b) {
-        //TODO: tentar implementar: http://blog.krecan.net/2014/06/10/what-are-listenablefutures-good-for
-        
         DeferredResult<Integer> deferredResult = new DeferredResult<>();
         
-        requests.add(deferredResult);
-        
-        deferredResult.onCompletion(new Runnable() {
-            @Override
-            public void run() {
-                requests.remove(deferredResult);
-            }
+        executorService.execute(() -> {
+            deferredResult.setResult(a + b);
         });
-        
-        deferredResult.setResult(a + b);
                 
         return deferredResult;
     }
