@@ -113,23 +113,6 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
-             <!-- Apaga os componentes anteriormente adicionados pelo bower -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>src/main/webapp/resources/components/</directory>
-                            <includes>
-                                <include>**/*</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
             
             <!-- Bower - gerenciador de pacotes javascript -->
             <!-- Lembre-se de instalar o nodejs e bower antes de tentar realizar o build -->
@@ -147,7 +130,7 @@
                 </executions>
                 <configuration>
                     <executable>bower</executable>
-                    <commandlineArgs>-y install</commandlineArgs>
+                    <commandlineArgs>update</commandlineArgs>
                 </configuration>
             </plugin>
             

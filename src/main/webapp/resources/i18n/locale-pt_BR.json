@@ -1,0 +1,26 @@
+{
+    "APP": {
+        "DESCRICAO": "Remote Application Services for Raspberry Pi",
+        "SOBRE": "© Por EricoGR 2015"
+    },
+    
+    "PRINCIPAL": {
+        "TITULO": "Remote Application Services",
+        "INICIO": "Início",
+        "SOBRE": "Sobre",
+        "CONTATO": "Contato",
+        "INFORMACAO": {
+            "TITULO": "Serviços remotos",
+            "DESCRICAO": "Fornecer serviços remotos para a Raspberry Pi utilizando padrões como REST e Oauth2",
+            "LOGIN": "Login"
+        },
+        "REST": {
+            "NOME": "Rest",
+            "DESCRICAO": "A Representational State Transfer (REST), em português Transferência de Estado Representacional, é uma abstração da arquitetura da World Wide Web (Web), mais precisamente, é um estilo arquitetural que consiste de um conjunto coordenado de restrições arquiteturais aplicadas a componentes, conectores e elementos de dados dentro de um sistema de hipermídia distribuído."
+        },
+        "OAUTH": {
+            "NOME": "Oauth2",
+            "DESCRICAO": "O OAuth2 é um framework de autorização aberto, poderoso e flexível que pode ser usado para proteção de aplicações e APIs REST. Com OAuth2 é possível prover um mecanismo padronizado para Identity Management, em que todos os componentes do sistema possam interagir de um modo seguro, usualmente onde uma aplicação cliente necessita de acesso a um recurso protegido, agindo no lugar do usuário."
+        }
+    }
+}
