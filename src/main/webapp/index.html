@@ -1,64 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="remoteAppServices">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{'APP.DESCRICAO'|translate}}">
-    <meta name="author" content="{{'APP.SOBRE'|translate}}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{{'APP.DESCRICAO'|translate}}">
+        <meta name="author" content="{{'APP.SOBRE'|translate}}">
 
-    <title>{{'PRINCIPAL.TITULO'|translate}}</title>
+        <title>{{'PRINCIPAL.TITULO'|translate}}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="resources/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="resources/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="resources/css/jumbotron-narrow.css" rel="stylesheet">
-  </head>
+        <!-- Custom styles for this template -->
+        <link href="resources/css/jumbotron-narrow.css" rel="stylesheet">
+    </head>
 
-  <body ng-controller="RemoteAppServicesController">
+    <body ng-controller="RemoteAppServicesController">
 
-    <div class="container">
-      <div class="header">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">{{'PRINCIPAL.INICIO'|translate}}</a></li>
-            <li role="presentation"><a href="#">{{'PRINCIPAL.SOBRE'|translate}}</a></li>
-            <li role="presentation"><a href="#">{{'PRINCIPAL.CONTATO'|translate}}</a></li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">{{'PRINCIPAL.TITULO'|translate}}</h3>
-      </div>
+        <div class="container">
+            <div class="header">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="active"><a href="#">{{'PRINCIPAL.INICIO'|translate}}</a></li>
+                        <li role="presentation"><a href="#">{{'PRINCIPAL.SOBRE'|translate}}</a></li>
+                        <li role="presentation"><a href="#">{{'PRINCIPAL.CONTATO'|translate}}</a></li>
+                    </ul>
+                </nav>
+                <h3 class="text-muted">{{'PRINCIPAL.TITULO'|translate}}</h3>
+            </div>
 
-      <div class="jumbotron">
-        <h1>{{'PRINCIPAL.INFORMACAO.TITULO'|translate}}</h1>
-        <p class="lead">{{'PRINCIPAL.INFORMACAO.DESCRICAO'|translate}}</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">{{'PRINCIPAL.INFORMACAO.LOGIN'|translate}}</a></p>
-      </div>
+            <div ng-view>
+            </div>
 
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>{{'PRINCIPAL.REST.NOME'|translate}}</h4>
-          <p>{{'PRINCIPAL.REST.DESCRICAO'|translate}}</p>
-        </div>
+        </div> <!-- /container -->
 
-        <div class="col-lg-6">
-          <h4>{{'PRINCIPAL.OAUTH.NOME'|translate}}</h4>
-          <p>{{'PRINCIPAL.OAUTH.DESCRICAO'|translate}}</p>
-        </div>
-      </div>
+        <script src="resources/components/angular/angular.min.js"></script>
+        <script src="resources/components/angular-route/angular-route.js"></script>
+        <script src="resources/components/angular-translate/angular-translate.min.js"></script>
+        <script src="resources/components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
-      <footer class="footer">
-        <p>{{'APP.SOBRE'|translate}}</p>
-      </footer>
-
-    </div> <!-- /container -->
-
-    <script src="resources/components/angular/angular.min.js"></script>
-    <script src="resources/components/angular-translate/angular-translate.min.js"></script>
-    <script src="resources/components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-    
-    <script src="resources/js/components/reTraducaoMensagens.js"></script>
-    <script src="resources/js/controllers/remoteAppServices.js"></script>
-  </body>
+        <script src="resources/js/components/ras-traducao-mensagens.js"></script>
+        <script src="resources/js/controllers/remoteAppServices.js"></script>
+    </body>
 </html>
