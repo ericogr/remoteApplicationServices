@@ -1,6 +1,5 @@
 package br.com.rapps;
 
-import java.net.UnknownHostException;
 import java.security.Principal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +17,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RequestMapping(value = "matematica")
 public class TesteController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final ExecutorService executorService = Executors.newWorkStealingPool();
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
     
     @RequestMapping(value = "somar", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)

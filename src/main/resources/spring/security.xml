@@ -8,6 +8,21 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
  
+    <!-- proteger páginas de acesso restrito -->
+    <sec:http pattern="/partials/protected/**" create-session="stateless" authentication-manager-ref="authenticationManager">
+        <sec:intercept-url pattern="/partials/protected/**" access="IS_AUTHENTICATED_FULLY" />
+        <sec:form-login 
+            login-page="/index.html#/login" 
+            default-target-url="/index.html#/cadastro" 
+            authentication-failure-url="/index.html#/erro-de-autenticacao" 
+            username-parameter="username"
+            password-parameter="password"
+            login-processing-url="/login" />
+        <sec:logout logout-success-url="/login?logout" />
+        <!-- enable csrf protection -->
+        <sec:csrf/>
+    </sec:http>
+    
     <!-- oauth2 protegido por senha - autenticacao basica -->
     <sec:http pattern="/api/oauth/**" create-session="stateless" authentication-manager-ref="authenticationManager">
         <sec:intercept-url pattern="/api/oauth/**" access="IS_AUTHENTICATED_FULLY" />
@@ -39,10 +54,10 @@
     
     <!-- Configuração do servidor de autorização -->
     <oauth:authorization-server
-            client-details-service-ref="clientDetails"
-            token-services-ref="tokenServices"
-            user-approval-page="forward:/aprovacao.html"
-            user-approval-handler-ref="userApprovalHandler">
+        client-details-service-ref="clientDetails"
+        token-services-ref="tokenServices"
+        user-approval-page="forward:/aprovacao.html"
+        user-approval-handler-ref="userApprovalHandler">
         <oauth:authorization-code />
         <oauth:implicit />
         <oauth:refresh-token />

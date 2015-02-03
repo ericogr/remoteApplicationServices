@@ -7,7 +7,7 @@ remoteAppServices.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/cadastro', {
-        templateUrl: 'partials/cadastro.html'
+        templateUrl: 'partials/protected/cadastro.html'
       }).
       when('/home', {
         templateUrl: 'partials/home.html'
