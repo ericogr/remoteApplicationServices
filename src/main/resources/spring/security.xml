@@ -12,7 +12,7 @@
     <sec:http pattern="/partials/protected/**" create-session="stateless" authentication-manager-ref="authenticationManager">
         <sec:intercept-url pattern="/partials/protected/**" access="IS_AUTHENTICATED_FULLY" />
         <sec:form-login 
-            login-page="/index.html#/login" 
+            login-page="/partials/login.html" 
             default-target-url="/index.html#/cadastro" 
             authentication-failure-url="/index.html#/erro-de-autenticacao" 
             username-parameter="username"
