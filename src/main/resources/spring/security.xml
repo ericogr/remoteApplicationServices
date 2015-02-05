@@ -8,18 +8,6 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
  
-    <!-- proteger páginas de acesso restrito -->
-    <sec:http pattern="/partials/protected/**" authentication-manager-ref="authenticationManager">
-        <sec:intercept-url pattern="/partials/protected/**" access="IS_AUTHENTICATED_FULLY" />
-        <sec:form-login 
-            login-page="/partials/login.html" 
-            default-target-url="/index.html#/cadastro" 
-            authentication-failure-url="/index.html#/erro-de-autenticacao" />
-        <sec:logout logout-success-url="/logout" />
-        <!-- enable csrf protection -->
-        <!--<sec:csrf/>-->
-    </sec:http>
-    
     <!-- oauth2 protegido por senha - autenticacao basica -->
     <sec:http pattern="/oauth/**" create-session="stateless" authentication-manager-ref="authenticationManager">
         <sec:intercept-url pattern="/oauth/**" access="IS_AUTHENTICATED_FULLY" />
@@ -41,6 +29,17 @@
         <sec:intercept-url pattern="/api/**" access="IS_AUTHENTICATED_FULLY" />
         <sec:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
         <sec:access-denied-handler ref="oauthAccessDeniedHandler" />
+    </sec:http>
+    
+    <!-- proteger páginas de acesso restrito -->
+    <sec:http pattern="/**">
+        <sec:intercept-url pattern="/partials/protected/**" access="IS_AUTHENTICATED_FULLY" />
+        <sec:http-basic />
+        <sec:form-login 
+            login-page="/partials/login.html" 
+            default-target-url="/index.html#/cadastro"
+            always-use-default-target="true"
+            authentication-failure-url="/index.html#/erro-de-autenticacao" />
     </sec:http>
     
     <!-- Se a autenticação basica falhar, retornar resposta compatível com padrao oauth2 -->
