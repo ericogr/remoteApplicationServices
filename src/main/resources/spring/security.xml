@@ -9,23 +9,20 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
  
     <!-- proteger páginas de acesso restrito -->
-    <sec:http pattern="/partials/protected/**" create-session="stateless" authentication-manager-ref="authenticationManager">
+    <sec:http pattern="/partials/protected/**" authentication-manager-ref="authenticationManager">
         <sec:intercept-url pattern="/partials/protected/**" access="IS_AUTHENTICATED_FULLY" />
         <sec:form-login 
             login-page="/partials/login.html" 
             default-target-url="/index.html#/cadastro" 
-            authentication-failure-url="/index.html#/erro-de-autenticacao" 
-            username-parameter="username"
-            password-parameter="password"
-            login-processing-url="/login" />
-        <sec:logout logout-success-url="/login?logout" />
+            authentication-failure-url="/index.html#/erro-de-autenticacao" />
+        <sec:logout logout-success-url="/logout" />
         <!-- enable csrf protection -->
-        <sec:csrf/>
+        <!--<sec:csrf/>-->
     </sec:http>
     
     <!-- oauth2 protegido por senha - autenticacao basica -->
-    <sec:http pattern="/api/oauth/**" create-session="stateless" authentication-manager-ref="authenticationManager">
-        <sec:intercept-url pattern="/api/oauth/**" access="IS_AUTHENTICATED_FULLY" />
+    <sec:http pattern="/oauth/**" create-session="stateless" authentication-manager-ref="authenticationManager">
+        <sec:intercept-url pattern="/oauth/**" access="IS_AUTHENTICATED_FULLY" />
         <sec:anonymous enabled="false" />
         <sec:http-basic entry-point-ref="clientAuthenticationEntryPoint" />
         <sec:custom-filter ref="clientCredentialsTokenEndpointFilter" before="BASIC_AUTH_FILTER" />

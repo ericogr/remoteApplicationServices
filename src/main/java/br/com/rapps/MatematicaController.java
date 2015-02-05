@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @RestController
-@RequestMapping(value = "matematica")
-public class TesteController {
+@RequestMapping(value = "api/v1/matematica")
+public class MatematicaController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
     

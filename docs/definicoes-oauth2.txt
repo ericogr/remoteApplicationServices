@@ -6,7 +6,7 @@ scopos: read, read_write
 *** Autenticacao oauth - resource owner password ***
 -Foi definido que o username e password oauth são os mesmos utilizados na autenticação basic
 curl -v -X GET \
-   'http://erico:erico1234@localhost:8080/remote-application-services/api/oauth/token?username=erico&password=erico1234&grant_type=password&scope=read'
+   'http://erico:erico1234@localhost:8080/remote-application-services/oauth/token?username=erico&password=erico1234&grant_type=password&scope=read'
 
 -Consumo do serviço utilizando o token gerado
 http://localhost:8080/remote-application-services/api/matematica/somar?a=12&b=15&access_token=7914a8f5-619c-4de1-8caa-3ffdf18dca91
@@ -16,8 +16,8 @@ curl -v -X GET \
 
 -Refresh token
 curl -v -X GET \
-   'http://erico:erico1234@localhost:8080/remote-application-services/api/oauth/token?grant_type=refresh_token&scope=read&refresh_token=6635ac91-f378-4c69-be59-fd2b2fdfc01c'
+   'http://erico:erico1234@localhost:8080/remote-application-services/oauth/token?grant_type=refresh_token&scope=read&refresh_token=6635ac91-f378-4c69-be59-fd2b2fdfc01c'
 
 *** implicit ***
 -Precisa de login (basic) e depois de aprovação do usuário
-http://localhost:8080/remote-application-services/api/oauth/authorize?&scope=read&response_type=token&client_id=erico
+http://localhost:8080/remote-application-services/oauth/authorize?&scope=read&response_type=token&client_id=erico

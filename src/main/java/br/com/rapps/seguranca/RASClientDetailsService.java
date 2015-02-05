@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RASClientDetailsService implements ClientDetailsService {
-    private static final String REDIRECT_URI = "../../index.html";
+    private static final String REDIRECT_URI = "../authorized.html";
     private static final List<String> GRANT_TYPES = Arrays.asList("password","authorization_code","refresh_token","implicit","redirect");
     private static final List<String> SCOPES = Arrays.asList("read", "read-write");
     private static final String USUARIO = "erico";

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Authorized</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    token
+                </td>
+                <td>
+                    <input id="token" size="40">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    type
+                </td>
+                <td>
+                    <input id="type" size="40">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    expires
+                </td>
+                <td>
+                    <input id="expires" size="40">
+                </td>
+            </tr>
+        </table>
+    </body>
+    <script>
+        function getQueryParams(qs) {
+            qs = qs.split("+").join(" ");
+
+            var params = {}, tokens,
+                re = /[?&]?([^=]+)=([^&]*)/g;
+
+            while (tokens = re.exec(qs)) {
+                params[decodeURIComponent(tokens[1])]
+                    = decodeURIComponent(tokens[2]);
+            }
+
+            return params;
+        }
+        
+        var params = getQueryParams(window.location.hash);
+        
+        document.getElementById("token").value = params['#access_token'];
+        document.getElementById("type").value = params['token_type'];
+        document.getElementById("expires").value = params['expires_in'];
+    </script>
+</html>
