@@ -112,6 +112,9 @@
     
     <profiles>
         <profile>
+            <!-- o bower update é executado por padrão, mas se incluir 
+                 o arquivo .ignorar-execucao-bower na raiz do projeto, sua
+                 execução é ignorada -->
             <id>execucao-bower</id>
             <activation>
                 <file>
