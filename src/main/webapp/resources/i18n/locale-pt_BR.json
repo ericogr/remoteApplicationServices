@@ -1,4 +1,8 @@
 {
+    "VOLTAR": "Voltar",
+    "ERRO": {
+        "AUTENTICACAO": "Usuário ou senha inválidos!"
+    },
     "APP": {
         "DESCRICAO": "Remote Application Services for Raspberry Pi",
         "SOBRE": "© Por EricoGR 2015"

@@ -15,13 +15,18 @@ remoteAppServices.config(['$routeProvider',
       when('/cadastro', {
         templateUrl: 'partials/protected/cadastro.html'
       }).
-      when('/erro-de-autenticacao', {
-        templateUrl: 'partials/erro-de-autenticacao.html'
+      when('/erro/:mensagemId', {
+        templateUrl: 'partials/erro.html',
+        controller: 'ErroController'
       }).
       otherwise({
-        redirectTo: '/home'
+        redirectTo: '/'
       });
   }]);
+
+remoteAppServices.controller('ErroController', function($scope, $routeParams) {
+  $scope.mensagemId = $routeParams.mensagemId;
+});
 
 remoteAppServices.controller('RemoteAppServicesController', function ($scope) {
   $scope.nome = 'erico';

@@ -33,7 +33,7 @@
             login-page="/partials/login.html"
             default-target-url="/index.html#/cadastro"
             always-use-default-target="true"
-            authentication-failure-url="/index.html#/erro-de-autenticacao" />
+            authentication-failure-url="/index.html#/erro/ERRO.AUTENTICACAO" />
     </sec:http>
     
     <!-- Se a autenticação basica falhar, retornar resposta compatível com padrao oauth2 -->
